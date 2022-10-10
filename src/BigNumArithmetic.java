@@ -3,13 +3,21 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class BigNumArithmetic {
-    public static void main(String[] args) throws FileNotFoundException {
-        FileInputStream fileIn = new FileInputStream(args[0]);
-        Scanner scan = new Scanner(fileIn);
+    public static void main(String[] args) {
         LList list = new LList();
         AStack stack = new AStack();
+        Scanner scan;
+        try {
+            FileInputStream fileIn = new FileInputStream(args[0]);
+            scan = new Scanner(fileIn);
+        }
+        catch (FileNotFoundException e) {
+            return;
+        }
 
+        while(scan.hasNext()) {
 
+        }
     }
 
     public static String trimChar(String s) {
