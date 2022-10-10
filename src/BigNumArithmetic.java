@@ -24,15 +24,14 @@ public class BigNumArithmetic {
             }
         }
         for(int i = 0; i < objects.size(); i++) {
-            System.out.println(objects.get(i));
+            String w = objects.get(i);
+            w = trimChar(w);
+            System.out.println(w);
         }
     }
 
     public static String trimChar(String s) {
-        for(int i = 0; i < s.length()-2; i++) {
-            if(s.charAt(0) != '0') {
-                break;
-            }
+        for(int i = 0; i < s.length() - 1; i++) {
             if(s.charAt(0) == '0') {
                 s = s.replaceFirst("0", "");
             }
