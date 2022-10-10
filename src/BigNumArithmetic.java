@@ -31,7 +31,8 @@ public class BigNumArithmetic {
     }
 
     public static String trimChar(String s) {
-        for(int i = 0; i < s.length() - 1; i++) {
+        final int l = s.length();
+        for(int i = 0; i < l - 1; i++) {
             if(s.charAt(0) == '0') {
                 s = s.replaceFirst("0", "");
             }
