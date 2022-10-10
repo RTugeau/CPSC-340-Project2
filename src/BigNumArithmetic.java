@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class BigNumArithmetic {
@@ -15,8 +16,15 @@ public class BigNumArithmetic {
             return;
         }
 
+        LinkedList<String> objects = new LinkedList();
         while(scan.hasNext()) {
-
+            String word = scan.next();
+            if (!word.equals("")) {
+                objects.add(word);
+            }
+        }
+        for(int i = 0; i < objects.size(); i++) {
+            System.out.println(objects.get(i));
         }
     }
 
