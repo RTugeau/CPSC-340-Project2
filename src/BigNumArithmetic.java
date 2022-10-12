@@ -18,9 +18,13 @@ public class BigNumArithmetic {
 
         LinkedList<String> objects = new LinkedList();
         while(scan.hasNext()) {
-            String word = scan.next();
-            if (!word.equals("")) {
-                objects.add(word);
+            String words = scan.nextLine();
+            String split[] = words.split(" ");
+
+            for (String s: split) {
+                if (!s.equals("")) {
+                    objects.add(s);
+                }
             }
         }
         for(int i = 0; i < objects.size(); i++) {
@@ -28,6 +32,7 @@ public class BigNumArithmetic {
             w = trimChar(w);
             System.out.println(w);
         }
+
     }
 
     public static String trimChar(String s) {
