@@ -26,11 +26,12 @@ public class BigNumArithmetic {
                     objects.add(s);
                 }
             }
-        }
-        for(int i = 0; i < objects.size(); i++) {
-            String w = objects.get(i).trim();
-            w = trimChar(w);
-            System.out.println(w);
+
+            for(int i = 0; i < objects.size(); i++) {
+                String w = objects.get(i).trim();
+                w = trimChar(w);
+                System.out.println(w);
+            }
         }
 
     }
