@@ -63,7 +63,8 @@ public class BigNumArithmetic {
     public static LList stringToLL(String s) {
         LList a = new LList();
         for(int i = s.length()-1; i >= 0; i--) {
-            a.append(s.charAt(i));
+            int c = Character.getNumericValue(s.charAt(i));
+            a.append(c);
         }
         return a;
     }
@@ -72,4 +73,32 @@ public class BigNumArithmetic {
         return "";
     }
 
+    public static String add(LList a, LList b) {
+        if(a.length() > b.length()) {
+            int diff = (a.length() - b.length());
+            for(int i = 0; i < diff; i++) {
+                b.append(0);
+            }
+        } else {
+            int diff = (b.length() - a.length());
+            for(int i = 0; i < diff; i++) {
+                a.append(0);
+            }
+        }
+        a.moveToStart();
+        b.moveToStart();
+        int carry = 0;
+        for(int i = 0; i < a.length(); i++) {
+            int c = (int) a.getValue();
+            int d = (int) b.getValue();
+            int e = c + d;
+            if(e > 9) {
+                carry = 1;
+                e = e - 10;
+            } else {
+
+            }
+        }
+        return " ";
+    }
 }
