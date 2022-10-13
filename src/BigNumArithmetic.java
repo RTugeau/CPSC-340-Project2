@@ -69,8 +69,15 @@ public class BigNumArithmetic {
         return a;
     }
 
-    public static String lListToString(LList l) {
-        return "";
+    public static String LListToString(LList l) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Character ch : l) {
+            sb.append(ch);
+        }
+
+        String string = sb.reverse().toString();
+        return string;
     }
 
     public static String add(LList a, LList b) {
