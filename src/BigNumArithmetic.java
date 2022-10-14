@@ -72,8 +72,9 @@ public class BigNumArithmetic {
     public static String LListToString(LList l) {
         StringBuilder sb = new StringBuilder();
 
-        for (Character ch : l) {
-            sb.append(ch);
+        for (int i = 0; i < l.length(); i++) {
+            sb.append(l.getValue());
+            l.next();
         }
 
         String string = sb.reverse().toString();
