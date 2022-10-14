@@ -57,7 +57,9 @@ public class BigNumArithmetic {
                 System.out.print(objects.getValue() + " ");
                 objects.next();
             }
-            System.out.print("= ");
+            if(!objects.isEmpty()) {
+                System.out.print("= ");
+            }
             if (bool) {
                 System.out.print(stack.pop());
             }
