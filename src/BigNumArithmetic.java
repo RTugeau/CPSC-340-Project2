@@ -57,13 +57,14 @@ public class BigNumArithmetic {
                 System.out.print(objects.getValue() + " ");
                 objects.next();
             }
-            if(!objects.isEmpty()) {
+            if(objects.isEmpty()) {
+            } else {
                 System.out.print("= ");
+                if (bool) {
+                    System.out.print(stack.pop());
+                }
+                System.out.println();
             }
-            if (bool) {
-                System.out.print(stack.pop());
-            }
-            System.out.println();
             objects.clear();
             stack.clear();
         }

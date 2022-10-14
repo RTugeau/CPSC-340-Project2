@@ -1,15 +1,30 @@
 import java.util.NoSuchElementException;
 
-public interface List { // List class ADT
-    // Remove all contents from the list, so it is once again empty
+/**
+ * List class ADT
+ */
+public interface List {
+    /** Remove all contents from the list, so it is once again empty
+     */
     public void clear();
 
-    // Insert "it" at the current location
-    // The client must ensure that the list's capacity is not exceeded
+
+    /**
+     * Insert "it" at the current location
+     * The client must ensure that the list's capacity is not exceeded
+     * @param it
+     * @return
+     */
     public boolean insert(Object it);
 
     // Append "it" at the end of the list
     // The client must ensure that the list's capacity is not exceeded
+
+    /**
+     *
+     * @param it
+     * @return
+     */
     public boolean append(Object it);
 
     // Remove and return the current element
