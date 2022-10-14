@@ -26,9 +26,10 @@ public class BigNumArithmetic {
                 }
             }
 
+            boolean bool = true;
+            String c = "";
             for(int i = 0; i < objects.length(); i++) {
                 String w = objects.getValue().toString().trim();
-                boolean bool = true;
                 w = trimChar(w);
                 System.out.println(w);
                 if(w.equals("+")) {
@@ -39,13 +40,32 @@ public class BigNumArithmetic {
                         String b = stack.pop().toString();
                         LList aLL = stringToLL(a);
                         LList bLL = stringToLL(b);
+                        c = add(aLL, bLL);
+                        trimChar(c);
+                        stack.push(c);
                     }
                 } else {
                     stack.push(w);
                 }
-
             }
-            System.out.println("new line");
+            if(stack.length() != 1) {
+                bool = false;
+            }
+            if(!bool) {
+                objects.moveToStart();
+                for(int i = 0; i < objects.length(); i++) {
+                    System.out.println(objects.currPos());
+                    objects.next();
+                }
+                System.out.print(" = ");
+            } else {
+                objects.moveToStart();
+                for(int i = 0; i < objects.length(); i++) {
+                    System.out.print(objects.currPos());
+                    objects.next();
+                }
+                System.out.print(" = " + stack.pop());
+            }
             objects.clear();
         }
     }
