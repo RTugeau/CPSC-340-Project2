@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class BigNumArithmetic {
     public static void main(String[] args) {
-        LList list = new LList();
         AStack stack = new AStack();
         Scanner scan;
         try {
@@ -31,7 +30,6 @@ public class BigNumArithmetic {
             for (int i = 0; i < objects.length(); i++) {
                 String w = objects.getValue().toString().trim();
                 w = trimChar(w);
-                //System.out.println(w);
                 if (w.equals("+")) {
                     if (stack.length() < 2) {
                         bool = false;
@@ -44,6 +42,7 @@ public class BigNumArithmetic {
                         trimChar(c);
                         stack.push(c);
                     }
+                    objects.next();
                 } else {
                     stack.push(w);
                     objects.next();
