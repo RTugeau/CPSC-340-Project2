@@ -41,7 +41,7 @@ public class BigNumArithmetic {
                         LList bLL = stringToLL(b);
                     }
                 } else {
-
+                    stack.push(w);
                 }
 
             }
@@ -93,20 +93,28 @@ public class BigNumArithmetic {
                 a.append(0);
             }
         }
+
         a.moveToStart();
         b.moveToStart();
+        LList finalNum = new LList();
         int carry = 0;
         for(int i = 0; i < a.length(); i++) {
             int c = (int) a.getValue();
             int d = (int) b.getValue();
-            int e = c + d;
+            int e = c + d + carry;
             if(e > 9) {
                 carry = 1;
                 e = e - 10;
+                finalNum.append(e);
             } else {
-
+                carry = 0;
+                finalNum.append(e);
             }
+            a.next();
+            b.next();
         }
-        return " ";
+        String finalRes = LListToString(finalNum);
+
+        return finalRes;
     }
 }
