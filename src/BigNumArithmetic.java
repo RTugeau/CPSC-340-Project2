@@ -26,7 +26,8 @@ public class BigNumArithmetic {
             }
 
             boolean bool = true;
-            String c = "";
+            String finalRes = "";
+            LList c = new LList();
             for (int i = 0; i < objects.length(); i++) {
                 String w = objects.getValue().toString().trim();
                 w = trimChar(w);
@@ -39,8 +40,9 @@ public class BigNumArithmetic {
                         LList aLL = stringToLL(a);
                         LList bLL = stringToLL(b);
                         c = add(aLL, bLL);
-                        trimChar(c);
-                        stack.push(c);
+                        finalRes = LListToString(c);
+                        trimChar(finalRes);
+                        stack.push(finalRes);
                     }
                     objects.next();
                 } else {
@@ -100,7 +102,7 @@ public class BigNumArithmetic {
         return string;
     }
 
-    public static String add(LList a, LList b) {
+    public static LList add(LList a, LList b) {
         if (a.length() > b.length()) {
             int diff = (a.length() - b.length());
             for (int i = 0; i < diff; i++) {
@@ -135,8 +137,7 @@ public class BigNumArithmetic {
         if (carry == 1) {
             finalNum.append(carry);
         }
-        String finalRes = LListToString(finalNum);
 
-        return finalRes;
+        return finalNum;
     }
 }
