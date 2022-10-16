@@ -45,6 +45,20 @@ public class BigNumArithmetic {
                         stack.push(finalRes);
                     }
                     objects.next();
+                } else if(w.equals("*")) {
+                    if(stack.length() < 2) {
+                        bool = false;
+                    } else {
+                        String a = stack.pop().toString();
+                        String b = stack.pop().toString();
+                        LList aLL = stringToLL(a);
+                        LList bLL = stringToLL(b);
+                        c = multiply(aLL, bLL);
+                        finalRes = LListToString(c);
+                        trimChar(finalRes);
+                        stack.push(finalRes);
+                    }
+                    objects.next();
                 } else {
                     stack.push(w);
                     objects.next();
@@ -138,6 +152,63 @@ public class BigNumArithmetic {
             finalNum.append(carry);
         }
 
+        return finalNum;
+    }
+
+    public static LList multiply(LList a, LList b) {
+        if (a.length() > b.length()) {
+            int diff = (a.length() - b.length());
+            for (int i = 0; i < diff; i++) {
+                b.append(0);
+            }
+        } else {
+            int diff = (b.length() - a.length());
+            for (int i = 0; i < diff; i++) {
+                a.append(0);
+            }
+        }
+
+        a.moveToStart();
+        b.moveToStart();
+        LList finalNum = new LList();
+        LList answer = new LList();
+        int carry = 0;
+        for(int i = 0; i < a.length(); i++) {
+            for(int x = 0; x < i; x++) {
+                answer.append(0);
+            }
+            int d = (int) a.getValue();
+            for(int j = 0; j < b.length(); j++) {
+                if(j == 0) {
+                    b.moveToStart();
+                }
+                int c = (int) b.getValue();
+                int e = (c * d) + carry;
+                if(e > 9) {
+                    carry = (e / 10);
+                    answer.append(e % 10);
+                } else if((c * d) == 0 && e > 0) {
+                    answer.append(carry);
+                    carry = 0;
+                } else if((c * d) != 0 && e > 0) {
+                    answer.append(e);
+                    carry = 0;
+                } else {
+                    answer.append(e);
+                }
+                b.next();
+            }
+            if(carry != 0) {
+                answer.append(carry);
+                carry = 0;
+            }
+            finalNum = add(answer, finalNum);
+            String s = LListToString(finalNum);
+            String t = trimChar(s);
+            finalNum = stringToLL(t);
+            answer.clear();
+            a.next();
+        }
         return finalNum;
     }
 }
