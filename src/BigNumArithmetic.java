@@ -46,7 +46,7 @@ public class BigNumArithmetic {
                     }
                     objects.next();
                 } else if(w.equals("*")) {
-                    if(stack.length() < 2) {
+                    if (stack.length() < 2) {
                         bool = false;
                     } else {
                         String a = stack.pop().toString();
@@ -54,6 +54,20 @@ public class BigNumArithmetic {
                         LList aLL = stringToLL(a);
                         LList bLL = stringToLL(b);
                         c = multiply(aLL, bLL);
+                        finalRes = LListToString(c);
+                        trimChar(finalRes);
+                        stack.push(finalRes);
+                    }
+                    objects.next();
+                } else if(w.equals("^")) {
+                    if(stack.length() < 2) {
+                        bool = false;
+                    } else {
+                        String a = stack.pop().toString();
+                        String b = stack.pop().toString();
+                        LList aLL = stringToLL(a);
+                        LList bLL = stringToLL(b);
+                        c = exp(aLL, bLL);
                         finalRes = LListToString(c);
                         trimChar(finalRes);
                         stack.push(finalRes);
@@ -218,5 +232,24 @@ public class BigNumArithmetic {
             a.next();                                          //     the 'curr' value in 'a' is set to its next value
         }
         return finalNum;                                       // the value of 'finalNum' is returned
+    }
+
+    public static LList exp(LList x, LList n) {
+        LList finalNum = new LList();
+        LList answer = new LList();
+        x.moveToStart();
+        n.moveToStart();
+        int power = (int) n.getValue();
+        System.out.println(power);
+        if(power == 0) {
+            finalNum.append(1);
+            return finalNum;
+        } else if(power % 2 == 0) {
+            answer.append(power / 2);
+            return exp(multiply(x, n), answer);
+        } else {
+            answer.append((power - 1) / 2);
+            return multiply(x, exp(multiply(x, n), answer));
+        }
     }
 }
