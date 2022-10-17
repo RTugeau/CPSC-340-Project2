@@ -155,60 +155,68 @@ public class BigNumArithmetic {
         return finalNum;
     }
 
-    public static LList multiply(LList a, LList b) {
-        if (a.length() > b.length()) {
-            int diff = (a.length() - b.length());
-            for (int i = 0; i < diff; i++) {
+    /**
+     * multiply function - multiplies two linked lists of digits together and returns a linked list containing the answer
+     * with each digit represented by a node.
+     * @param a linked list containing the first number (in digits) to be multiplied
+     * @param b linked list containing the second number (in digits) to be multiplied
+     * @return linked list containing the answer of 'a' multiplied by 'b' (in digits)
+     */
+
+    public static LList multiply(LList a, LList b) {           // the first section here makes both linked lists of equal length
+        if (a.length() > b.length()) {                         // if 'a' is larger than 'b', then the length of 'b' needs to be adjusted
+            int diff = (a.length() - b.length());              // the value of 'a' is subtracted from 'b' to get the difference
+            for (int i = 0; i < diff; i++) {                   // a loop is executed to add the additional zeros to 'b'
                 b.append(0);
             }
-        } else {
-            int diff = (b.length() - a.length());
-            for (int i = 0; i < diff; i++) {
+        } else {                                               // if 'b' is larger than 'a', then the length of 'a' needs to be adjusted
+            int diff = (b.length() - a.length());              // the value of 'b' is subtracted from 'a' to get the difference
+            for (int i = 0; i < diff; i++) {                   // a loop is executed to add the additional zeros to 'a'
                 a.append(0);
             }
-        }
+        }                                                      // at this point, the lengths of 'a' and 'b' are identical
 
-        a.moveToStart();
+        a.moveToStart();                                       // both linked lists 'curr' values are moved to the start of the linked lists
         b.moveToStart();
-        LList finalNum = new LList();
-        LList answer = new LList();
-        int carry = 0;
-        for(int i = 0; i < a.length(); i++) {
-            for(int x = 0; x < i; x++) {
-                answer.append(0);
+        LList finalNum = new LList();                          // linked list 'finalNum' is created to hold the final answer
+        LList answer = new LList();                            // linked list 'answer' is created to hold the answer after each iteration of the bottom value in multiplication
+        int carry = 0;                                         // 'carry' value is initialized to hold the value that needs to be carried over in multiplication
+        for(int i = 0; i < a.length(); i++) {                  // while int value 'i' is less than the length of 'a' (this increments through the bottom values in multiplication)
+            for(int x = 0; x < i; x++) {                       //     a zero is appended to 'answer' every time 'i' increments to keep the values lined up for the addition
+                answer.append(0);                              //      portion of the multiplication process
             }
-            int d = (int) a.getValue();
-            for(int j = 0; j < b.length(); j++) {
-                if(j == 0) {
-                    b.moveToStart();
+            int d = (int) a.getValue();                        //     'd' is initialized and is set to the digit of 'a' at 'i' (cast from an object to an int value)
+            for(int j = 0; j < b.length(); j++) {              //     while int value 'j' is less than the length of 'b' (this increments through the top values in multiplication)
+                if(j == 0) {                                   //         if the value of 'j' is equal to '0', then it means we're looking at the rightmost top value
+                    b.moveToStart();                           //         move the 'curr' value in linked list 'b' to the start of the linked list
                 }
-                int c = (int) b.getValue();
-                int e = (c * d) + carry;
-                if(e > 9) {
-                    carry = (e / 10);
-                    answer.append(e % 10);
-                } else if((c * d) == 0 && e > 0) {
-                    answer.append(carry);
-                    carry = 0;
-                } else if((c * d) != 0 && e > 0) {
-                    answer.append(e);
-                    carry = 0;
-                } else {
-                    answer.append(e);
+                int c = (int) b.getValue();                    //         'c' is initialized and is set to the digit of 'b' at 'j' (cast from and object to an int value)
+                int e = (c * d) + carry;                       //         'e' is created and set to the value of (c * d) + the value of carry
+                if(e > 9) {                                    //         if 'e' is greater than 9, then we have to carry over a value from 'e' to the next calculation
+                    carry = (e / 10);                          //             carry is divided by 10 to get the value that needs to be carried over
+                    answer.append(e % 10);                     //             the value of (e modulus(%) 10) is appended to 'answer'
+                } else if((c * d) == 0 && e > 0) {             //         if the value of 'e' is created entirely from the value of 'carry',
+                    answer.append(carry);                      //             then the value of 'carry' is appended to 'answer'
+                    carry = 0;                                 //              and 'carry' is set to '0'
+                } else if((c * d) != 0 && e > 0) {             //         if the value of 'e' is not created entirely from the value of 'carry',
+                    answer.append(e);                          //             then the value of 'e' is appended to 'answer'
+                    carry = 0;                                 //              and 'carry' is set to '0'
+                } else {                                       //         in all other instances,
+                    answer.append(e);                          //             the value of 'e' is appended to 'answer'
                 }
-                b.next();
-            }
-            if(carry != 0) {
-                answer.append(carry);
-                carry = 0;
-            }
-            finalNum = add(answer, finalNum);
-            String s = LListToString(finalNum);
-            String t = trimChar(s);
-            finalNum = stringToLL(t);
-            answer.clear();
-            a.next();
+                b.next();                                      //         the 'curr' value in 'b' is set to its next value
+            }                                                  //   at this point, all the top values in the multiplication have been visited for the current incrementation value 'i'
+            if(carry != 0) {                                   //     if the value of 'carry' is not equal to '0',
+                answer.append(carry);                          //         then it gets appended to 'answer'
+                carry = 0;                                     //              and 'carry' is set to '0'
+            }                                                  //   the values in 'answer' now equal the top value in the multiplication multiplied by the bottom digit at a given iteration value 'i'
+            finalNum = add(answer, finalNum);                  //     the add() function is called and fed 'finalNum' and 'answer' to add them together and this value is set to the value of 'finalNum'
+            String s = LListToString(finalNum);                //     string 's' is initialized and stores the value of 'finalNum' converted to a string using the LListToString() function
+            String t = trimChar(s);                            //     string 't' is initialized and stores the value of 's' after it's been trimmed using the trimChar() function
+            finalNum = stringToLL(t);                          //     't' is converted back to a linked list using the stringToLL() function and is set to the value of 'finalNum'
+            answer.clear();                                    //     'answer' is cleared for the next iteration
+            a.next();                                          //     the 'curr' value in 'a' is set to its next value
         }
-        return finalNum;
+        return finalNum;                                       // the value of 'finalNum' is returned
     }
 }
