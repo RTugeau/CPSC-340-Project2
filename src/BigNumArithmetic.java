@@ -1,7 +1,19 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import static java.lang.Integer.parseInt;
 
+/**
+ * BigNumArithmetic class
+ * @version (10-17-2022)
+ * @name Cole, Riley
+ *
+ * Honor Pledge sign: Cole, Riley
+ *
+ * This class will take an input file and read through it to compute
+ * big number problems. This will compute addition, multiplication, and exponentiation
+ * in small or big formulas
+ */
 public class BigNumArithmetic {
     public static void main(String[] args) {
         AStack stack = new AStack();
@@ -65,9 +77,9 @@ public class BigNumArithmetic {
                     } else {
                         String a = stack.pop().toString();
                         String b = stack.pop().toString();
-                        LList aLL = stringToLL(a);
                         LList bLL = stringToLL(b);
-                        c = exp(aLL, bLL);
+                        LList aLL = stringToLL(a);
+                        c = exp(bLL, aLL);
                         finalRes = LListToString(c);
                         trimChar(finalRes);
                         stack.push(finalRes);
@@ -235,21 +247,35 @@ public class BigNumArithmetic {
     }
 
     public static LList exp(LList x, LList n) {
-        LList finalNum = new LList();
-        LList answer = new LList();
         x.moveToStart();
         n.moveToStart();
-        int power = (int) n.getValue();
-        System.out.println(power);
+        int power;
+        String s = LListToString(n);
+        power = parseInt(s);
+        String xString = LListToString(x);
+
         if(power == 0) {
+            LList finalNum = new LList();
             finalNum.append(1);
             return finalNum;
-        } else if(power % 2 == 0) {
-            answer.append(power / 2);
-            return exp(multiply(x, n), answer);
+        } else if((power % 2) == 0) {
+            LList x1 = new LList();
+            LList x2 = new LList();
+            x1 = stringToLL(xString);
+            x2 = stringToLL(xString);
+            return exp(multiply(x1, x2), stringToLL(Integer.toString(power/2)));
+
         } else {
+            LList answer = new LList();
+            LList x1 = new LList();
+            LList x2 = new LList();
+            LList x3 = new LList();
+            x1 = stringToLL(xString);
+            x2 = stringToLL(xString);
+            x3 = stringToLL(xString);
             answer.append((power - 1) / 2);
-            return multiply(x, exp(multiply(x, n), answer));
+            return multiply(x1, exp(multiply(x2, x3), stringToLL(Integer.toString((power - 1) / 2))));
         }
+
     }
 }
