@@ -8,6 +8,8 @@ import static java.lang.Integer.parseInt;
  * @version (10-17-2022)
  * @name Cole Ely, Riley Tugeau
  *
+ * “I hereby declare upon my word of honor that I have neither given
+ * nor received unauthorized help on this work.”
  * Honor Pledge sign: Cole Ely, Riley Tugeau
  *
  * This class will take an input file and read through it to compute
