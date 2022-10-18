@@ -6,9 +6,9 @@ import static java.lang.Integer.parseInt;
 /**
  * BigNumArithmetic class
  * @version (10-17-2022)
- * @name Cole, Riley
+ * @name Cole Ely, Riley Tugeau
  *
- * Honor Pledge sign: Cole, Riley
+ * Honor Pledge sign: Cole Ely, Riley Tugeau
  *
  * This class will take an input file and read through it to compute
  * big number problems. This will compute addition, multiplication, and exponentiation
@@ -16,6 +16,11 @@ import static java.lang.Integer.parseInt;
  */
 public class BigNumArithmetic {
     public static void main(String[] args) {
+        /**
+         * This builds the AStack to be used later on and we
+         * use a try/catch to run through the file line by line
+         * to compute the math and return the answer or if it is wrong
+         */
         AStack stack = new AStack();
         Scanner scan;
         try {
@@ -26,17 +31,32 @@ public class BigNumArithmetic {
             return;
         }
 
+        /**
+         * A LList is made to take in the objects of the sentence
+         * to be scanned and computed based on the math function
+         */
         LList objects = new LList();
         while (scan.hasNext()) {
             String words = scan.nextLine();
             String[] split = words.split(" ");
 
+            /**
+             * Appends the object to LList
+             */
             for (String s: split) {
                 if (!s.equals("")) {
                     objects.append(s);
                 }
             }
 
+            /**
+             * This is a for loop that will go through
+             * each object to push, pop, compute the math
+             * or return if no answer
+             * The if else statements will look for +, *, ^, or push
+             * until the answer is right or the boolean returns false
+             * because the computing can't be done
+             */
             boolean bool = true;
             String finalRes = "";
             LList c = new LList();
@@ -90,6 +110,12 @@ public class BigNumArithmetic {
                     objects.next();
                 }
             }
+            /**
+             * These if statements and for loop will
+             * print the output based on if the boolean is false
+             * or true because the answer was computed. Once done the
+             * object and stack will be cleared for the next line
+             */
             if (stack.length() != 1) {
                 bool = false;
             }
@@ -111,6 +137,14 @@ public class BigNumArithmetic {
         }
     }
 
+    /**
+     * this method will trim the zeros off the beginning of the
+     * value or until the last digit is 0, if all digits are 0
+     * @param s
+     *  string to trim
+     * @return
+     *  returns the trimmed string
+     */
     public static String trimChar(String s) {
         final int l = s.length();
         for (int i = 0; i < l - 1; i++) {
@@ -121,15 +155,33 @@ public class BigNumArithmetic {
         return s;
     }
 
+    /**
+     * This method uses a for loop to go through each value in
+     * the string backwards and append the single value to a node
+     * in the LList
+     * @param s
+     *  string taken in
+     * @return
+     *  return a LList of node values of the string (reverse)
+     */
     public static LList stringToLL(String s) {
         LList a = new LList();
-        for (int i = s.length()-1; i >= 0; i--) {
+        for (int i = s.length() - 1; i >= 0; i--) {
             int c = Character.getNumericValue(s.charAt(i));
             a.append(c);
         }
         return a;
     }
 
+    /**
+     * This method takes the LList and will get the current value
+     * in the list at the position to append to the StringBuilder to
+     * present our string back to us in reverse
+     * @param l
+     *  LList passed in
+     * @return
+     *  return string value of the LList
+     */
     public static String LListToString(LList l) {
         StringBuilder sb = new StringBuilder();
 
@@ -142,7 +194,22 @@ public class BigNumArithmetic {
         return string;
     }
 
+    /**
+     * This is the add method to add two LList together
+     * to get the final output of addition
+     * @param a
+     *  LList number
+     * @param b
+     *  LList number
+     * @return
+     *  return the two added LList
+     */
     public static LList add(LList a, LList b) {
+        /**
+         * these if statements check to see the difference in length
+         * to add zeros to the beginning so that both LList are the
+         * same length
+         */
         if (a.length() > b.length()) {
             int diff = (a.length() - b.length());
             for (int i = 0; i < diff; i++) {
@@ -155,6 +222,12 @@ public class BigNumArithmetic {
             }
         }
 
+        /**
+         * This will get the value of each node at the starting position
+         * and will add them. It will carry over a 1 if the value is greater than 9.
+         * Once the for loop reaches the end, it will carry the one or the addition
+         * will be done. Once computed, it will return the final resulting LList
+         */
         a.moveToStart();
         b.moveToStart();
         LList finalNum = new LList();
@@ -188,7 +261,6 @@ public class BigNumArithmetic {
      * @param b linked list containing the second number (in digits) to be multiplied
      * @return linked list containing the answer of 'a' multiplied by 'b' (in digits)
      */
-
     public static LList multiply(LList a, LList b) {           // the first section here makes both linked lists of equal length
         if (a.length() > b.length()) {                         // if 'a' is larger than 'b', then the length of 'b' needs to be adjusted
             int diff = (a.length() - b.length());              // the value of 'a' is subtracted from 'b' to get the difference
@@ -246,7 +318,23 @@ public class BigNumArithmetic {
         return finalNum;                                       // the value of 'finalNum' is returned
     }
 
+    /**
+     * This exponentiation method takes in the base value
+     * and the exponential to return the new LList value
+     * @param x
+     *  The x passed in is the base
+     * @param n
+     *  The n passed in is the power
+     * @return
+     *  returns the LList solution of the exponentiation
+     */
     public static LList exp(LList x, LList n) {
+        /**
+         * moves to the start of the LLists
+         * converts the power into an int and
+         * converts the LList into a string to be used in the
+         * multiplication since we can not repeat the original LList
+         */
         x.moveToStart();
         n.moveToStart();
         int power;
@@ -254,6 +342,11 @@ public class BigNumArithmetic {
         power = parseInt(s);
         String xString = LListToString(x);
 
+        /**
+         * recursion to check if the power equals 0 which returns 1.
+         * Then we use mod to check if the power is even which will multiply the
+         * base and give us the exp of base*base ^ power divided by two.
+         */
         if(power == 0) {
             LList finalNum = new LList();
             finalNum.append(1);
@@ -266,14 +359,19 @@ public class BigNumArithmetic {
             return exp(multiply(x1, x2), stringToLL(Integer.toString(power/2)));
 
         } else {
-            LList answer = new LList();
+            /**
+             * the else case uses 3 new LList so that the x does not
+             * repeat in the process/breaks our code
+             * This will convert it from a Str to LList back to String.
+             * It will implement multiplication of the base times the exp
+             * until the final number is returned
+             */
             LList x1 = new LList();
             LList x2 = new LList();
             LList x3 = new LList();
             x1 = stringToLL(xString);
             x2 = stringToLL(xString);
             x3 = stringToLL(xString);
-            answer.append((power - 1) / 2);
             return multiply(x1, exp(multiply(x2, x3), stringToLL(Integer.toString((power - 1) / 2))));
         }
 
